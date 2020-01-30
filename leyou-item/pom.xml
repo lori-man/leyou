@@ -16,6 +16,11 @@
         <module>leyou-item-service</module>
     </modules>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
