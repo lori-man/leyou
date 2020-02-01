@@ -8,6 +8,7 @@ import org.Mercury.item.mapper.BrandMapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
@@ -28,7 +29,7 @@ public class BrandService {
      * @param desc
      * @return
      */
-    public PageResult<Brand> queryBrandsByPage(String key, Integer page, Integer rows, String sortBy, String desc) {
+    public PageResult<Brand> queryBrandsByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc) {
         //初始化example对象
         Example example = new Example(Brand.class);
         Example.Criteria criteria = example.createCriteria();
@@ -39,10 +40,10 @@ public class BrandService {
         }
         //添加分页条件
         PageHelper.startPage(page,rows);
-
+        System.out.println(desc);
         //添加排序条件
         if (StringUtils.isNotBlank(sortBy)) {
-            example.setOrderByClause(sortBy + " " + (desc.equals("true") ? "desc" : "asc"));
+            example.setOrderByClause(sortBy + " " + (desc ? "desc" : "asc"));
         }
         List<Brand> brands = this.brandMapper.selectByExample(example);
 
@@ -51,5 +52,22 @@ public class BrandService {
 
         //包装成分页结果集返回
         return new PageResult<>(pageInfo.getTotal(), pageInfo.getList());
+    }
+
+    /**
+     * 新增品牌
+     *
+     * @param brand
+     * @param cids
+     */
+    @Transactional
+    public void saveBrand(Brand brand, List<Long> cids) {
+        //先新增Brand
+        this.brandMapper.insertSelective(brand) ;
+
+        //新增中间表
+        cids.forEach(cid -> {
+            this.brandMapper.insertCategoryAndBrand(cid, brand.getId());
+        });
     }
 }
