@@ -40,7 +40,6 @@ public class BrandService {
         }
         //添加分页条件
         PageHelper.startPage(page,rows);
-        System.out.println(desc);
         //添加排序条件
         if (StringUtils.isNotBlank(sortBy)) {
             example.setOrderByClause(sortBy + " " + (desc ? "desc" : "asc"));
