@@ -56,6 +56,19 @@ public class GoodsController {
     }
 
     /**
+     * 新增商品
+     *
+     * @param spuBo
+     * @return
+     */
+    @PutMapping("goods")
+    public ResponseEntity<Void> updateGoods(@RequestBody SpuBo spuBo) {
+        this.goodsService.updateGoods(spuBo);
+
+        return ResponseEntity.noContent().build();  //204
+    }
+
+    /**
      * 根据spuId查询SpuDetail
      * @param spuId
      * @return

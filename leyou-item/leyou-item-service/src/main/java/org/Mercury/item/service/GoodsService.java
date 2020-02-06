@@ -107,19 +107,7 @@ public class GoodsService {
         spuDetail.setSpuId(spuBo.getId());
         this.spuDetailMapper.insertSelective(spuDetail);
 
-        spuBo.getSkus().forEach(sku -> {
-            //新增sku
-            sku.setId(null);
-            sku.setSpuId(spuBo.getId());
-            sku.setCreateTime(new Date());
-            sku.setLastUpdateTime(sku.getCreateTime());
-            this.skuMapper.insertSelective(sku);
-            //新增stock
-            Stock stock = new Stock();
-            stock.setSkuId(sku.getId());
-            stock.setStock(sku.getStock());
-            this.stockMapper.insertSelective(stock);
-        });
+        saveSkuAndStock(spuBo);
 
     }
 
@@ -148,5 +136,57 @@ public class GoodsService {
             sku.setStock(stock.getStock());
         });
         return skus;
+    }
+
+    /**
+     * 新增商品
+     *
+     * @param spuBo
+     * @return
+     */
+    @Transactional
+    public void updateGoods(SpuBo spuBo) {
+        //根据spuId删除sku
+        Sku record = new Sku();
+        record.setSpuId(spuBo.getId());
+        List<Sku> skus = this.skuMapper.select(record);
+        skus.forEach(sku -> {
+            //删除stock
+            this.stockMapper.deleteByPrimaryKey(sku.getId());
+        });
+
+        //删除sku
+        Sku sku = new Sku();
+        sku.setSpuId(spuBo.getId());
+        this.skuMapper.delete(sku);
+
+        //新增sku和stock
+        this.saveSkuAndStock(spuBo);
+
+        //更新spu和spuDetail
+        spuBo.setCreateTime(null);
+        spuBo.setLastUpdateTime(new Date());
+        spuBo.setValid(null);
+        spuBo.setSaleable(null);
+        this.spuMapper.updateByPrimaryKeySelective(spuBo);
+
+        this.spuDetailMapper.updateByPrimaryKeySelective(spuBo.getSpuDetail());
+
+    }
+
+    private void saveSkuAndStock(SpuBo spuBo) {
+        spuBo.getSkus().forEach(sku -> {
+            //新增sku
+            sku.setId(null);
+            sku.setSpuId(spuBo.getId());
+            sku.setCreateTime(new Date());
+            sku.setLastUpdateTime(sku.getCreateTime());
+            this.skuMapper.insertSelective(sku);
+            //新增stock
+            Stock stock = new Stock();
+            stock.setSkuId(sku.getId());
+            stock.setStock(sku.getStock());
+            this.stockMapper.insertSelective(stock);
+        });
     }
 }
