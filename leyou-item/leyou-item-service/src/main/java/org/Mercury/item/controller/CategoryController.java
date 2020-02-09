@@ -46,4 +46,18 @@ public class CategoryController {
         //500:服务器内部错误
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+
+    /**
+     * 根据多级分类id查询分类名称
+     * @param ids
+     * @return
+     */
+    @GetMapping
+    public ResponseEntity<List<String>> queryNamesByIds(@RequestParam("ids") List<Long> ids) {
+        List<String> nanes = this.categoryService.queryNamesByIds(ids);
+        if (CollectionUtils.isEmpty(nanes)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(nanes);
+    }
 }

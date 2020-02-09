@@ -36,7 +36,7 @@ public class UploadService {
                 return null;
             }
             //保存服务器
-            file.transferTo(new File("D:\\leyou\\image\\" + originName));
+            file.transferTo(new File("D:\\leyou\\leyou\\image\\" + originName));
 
             //返回url，进行回显
             return "http://image.leyou.com/" + originName;

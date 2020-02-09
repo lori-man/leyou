@@ -15,6 +15,7 @@
         <module>leyou-common</module>
         <module>leyou-upload</module>
         <module>goods-web</module>
+        <module>leyou-search</module>
     </modules>
 
     <name>leyou</name>

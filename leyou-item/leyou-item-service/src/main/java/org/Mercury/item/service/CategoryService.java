@@ -30,7 +30,7 @@ public class CategoryService {
      * @param ids
      * @return
      */
-    public List<String> queryNameByIds(List<Long> ids) {
+    public List<String> queryNamesByIds(List<Long> ids) {
         List<Category> categories = this.categoryMapper.selectByIdList(ids);//SelectByIdListMapper的唯一方法
         return categories.stream().map(category -> category.getName()).collect(Collectors.toList());
     }

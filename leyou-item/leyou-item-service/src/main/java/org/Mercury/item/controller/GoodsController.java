@@ -21,7 +21,6 @@ public class GoodsController {
 
     /**
      * 根据条件分页查询spu
-     *
      * @param key
      * @param saleable
      * @param page

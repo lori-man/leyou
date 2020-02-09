@@ -1,0 +1,29 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: search-service
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 120.76.202.237:9300   #写节点，不些http
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      password: adg123
+      username: root
+      url: jdbc:mysql://localhost:3306/leyou?serverTimezone=UTC
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10086/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 5 #心跳时间
+    lease-expiration-duration-in-seconds: 15
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 2000  #响应超时设置
+        read-timeout: 6000  #请求超时设置

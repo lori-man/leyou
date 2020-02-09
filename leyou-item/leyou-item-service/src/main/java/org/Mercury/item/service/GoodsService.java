@@ -79,7 +79,7 @@ public class GoodsService {
             Brand brand = this.brandMapper.selectByPrimaryKey(spu.getBrandId());
             spuBo.setBname(brand.getName());
             //查询分类名称
-            List<String> names = this.categoryService.queryNameByIds(Arrays.asList(spu.getCid1(), spu.getCid2(), spu.getCid3()));
+            List<String> names = this.categoryService.queryNamesByIds(Arrays.asList(spu.getCid1(), spu.getCid2(), spu.getCid3()));
             spuBo.setCname(StringUtils.join(names, "-"));
             return spuBo;
         }).collect(Collectors.toList());
