@@ -4,7 +4,7 @@ import org.Mercury.client.GoodsClient;
 import org.Mercury.common.entity.PageResult;
 import org.Mercury.entity.Goods;
 import org.Mercury.entity.bo.SpuBo;
-import org.Mercury.repository.GoodsRespository;
+import org.Mercury.repository.GoodsRepository;
 import org.Mercury.service.SearchService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +31,7 @@ public class ElasticsearchTest {
     private ElasticsearchTemplate elasticsearchTemplate;
 
     @Autowired
-    private GoodsRespository goodsRespository;
+    private GoodsRepository goodsRepository;
 
     @Test
     public void createIndex(){
@@ -57,7 +57,7 @@ public class ElasticsearchTest {
                 return null;
             }).collect(Collectors.toList());
 
-            this.goodsRespository.saveAll(goodsList);
+            this.goodsRepository.saveAll(goodsList);
 
             page++;
             // 获取当前页的数据条数，如果是最后一页，没有100条

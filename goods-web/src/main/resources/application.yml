@@ -5,11 +5,16 @@ spring:
     name: goods-web
   thymeleaf:
     cache: false
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      password: adg123
+      username: root
+      url: jdbc:mysql://localhost:3306/leyou?serverTimezone=UTC
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:10086/eureka
   instance:
-    lease-renewal-interval-in-seconds: 5 #ÐÄÌøÊ±¼ä
+    lease-renewal-interval-in-seconds: 5 #å¿ƒè·³æ—¶é—´
     lease-expiration-duration-in-seconds: 15

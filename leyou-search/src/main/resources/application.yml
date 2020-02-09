@@ -14,6 +14,8 @@ spring:
       password: adg123
       username: root
       url: jdbc:mysql://localhost:3306/leyou?serverTimezone=UTC
+  jackson:
+    default-property-inclusion: non_null
 eureka:
   client:
     service-url:
