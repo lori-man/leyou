@@ -6,22 +6,26 @@ import org.Mercury.client.BrandClient;
 import org.Mercury.client.CategoryClient;
 import org.Mercury.client.GoodsClient;
 import org.Mercury.client.SpecificationClient;
-import org.Mercury.common.entity.PageResult;
 import org.Mercury.entity.*;
 import org.Mercury.repository.GoodsRepository;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.LongTerms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SearchService {
@@ -47,7 +51,7 @@ public class SearchService {
      * @param request
      * @return
      */
-    public PageResult<Goods> search(SearchRequest request) {
+    public SearchResult search(SearchRequest request) {
         String key = request.getKey();
         // 判断是否有搜索条件，如果没有，直接返回null。不允许搜索全部商品
         if (StringUtils.isBlank(key)) {
@@ -71,12 +75,58 @@ public class SearchService {
         int size = request.getSize();
         queryBuilder.withPageable(PageRequest.of(page - 1, size));
 
-        // 4、查询，获取结果
-        Page<Goods> goodsPage = this.goodsRepository.search(queryBuilder.build());
+        //添加分类和品牌聚合
+        String categoryAggName = "categories";
+        String brandAggName = "brands";
+        queryBuilder.addAggregation(AggregationBuilders.terms(categoryAggName).field("cid3"));
+        queryBuilder.addAggregation(AggregationBuilders.terms(brandAggName).field("brandId"));
 
+        // 4、查询，获取结果
+        AggregatedPage<Goods> goodsPage = (AggregatedPage<Goods>) this.goodsRepository.search(queryBuilder.build());
+
+        //获取聚合结果集并解析
+        List<Map<String, Object>> categories = getCategoryAggResult(goodsPage.getAggregation(categoryAggName));
+        List<Brand> brands = getBrandAggResult(goodsPage.getAggregation(brandAggName));
         // 封装结果并返回
-        return new PageResult<>(goodsPage.getTotalElements(), goodsPage.getTotalPages(), goodsPage.getContent());
+        return new SearchResult(goodsPage.getTotalElements(), goodsPage.getTotalPages(), goodsPage.getContent(), categories, brands);
     }
+
+    /**
+     * 解析品牌的聚合结果集
+     *
+     * @param aggregation
+     * @return
+     */
+    private List<Brand> getBrandAggResult(Aggregation aggregation) {
+        LongTerms longTerms = (LongTerms) aggregation;
+        //获得集合中的桶
+        return longTerms.getBuckets().stream().map(bucket -> {
+            return this.brandClient.queryBrandById(bucket.getKeyAsNumber().longValue());
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * 解析分类的聚合结果集
+     *
+     * @param aggregation
+     * @return
+     */
+    private List<Map<String, Object>> getCategoryAggResult(Aggregation aggregation) {
+        LongTerms longTerms = (LongTerms) aggregation;
+
+        //获取桶的集合，转化成List<Map<String,Object>>
+        return longTerms.getBuckets().stream().map(bucket -> {
+            Map<String, Object> map = new HashMap<>();
+            //获取桶中分类id
+            Long id = bucket.getKeyAsNumber().longValue();
+            //根据分类id查询分类名称
+            List<String> names = this.categoryClient.queryNamesByIds(Arrays.asList(id));
+            map.put("id", id);
+            map.put("name", names.get(0));
+            return map;
+        }).collect(Collectors.toList());
+    }
+
     /**
      * 将spuBo转换成goods
      * @param spu

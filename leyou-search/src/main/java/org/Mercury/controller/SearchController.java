@@ -4,6 +4,7 @@ import com.netflix.discovery.converters.Auto;
 import org.Mercury.common.entity.PageResult;
 import org.Mercury.entity.Goods;
 import org.Mercury.entity.SearchRequest;
+import org.Mercury.entity.SearchResult;
 import org.Mercury.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,8 @@ public class SearchController {
     private SearchService searchService;
 
     @PostMapping("page")
-    public ResponseEntity<PageResult<Goods>> search(@RequestBody SearchRequest request) {
-        PageResult<Goods> result = this.searchService.search(request);
+    public ResponseEntity<SearchResult> search(@RequestBody SearchRequest request) {
+        SearchResult result = this.searchService.search(request);
         if (result == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
