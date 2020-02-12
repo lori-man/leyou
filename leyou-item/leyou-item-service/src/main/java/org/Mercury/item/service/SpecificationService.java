@@ -33,7 +33,7 @@ public class SpecificationService {
      * 根据条件查询规格参数
      *
      *
-     * @param aLong
+     * @param cid
      * @param gid
      * @param generic
      * @param searching
@@ -47,5 +47,20 @@ public class SpecificationService {
         record.setSearching(searching);
 
         return this.specParamMapper.select(record);
+    }
+
+    /**
+     * 根据分类id获取参数组的集合
+     *
+     * @param cid
+     * @return
+     */
+    public List<SpecGroup> queryGroupsWithParam(Long cid) {
+        List<SpecGroup> groups = queryGroupById(cid);
+        groups.forEach(group->{
+            List<SpecParam> params = queryParams(group.getId(), null, null, null);
+            group.setParams(params);
+        });
+        return groups;
     }
 }

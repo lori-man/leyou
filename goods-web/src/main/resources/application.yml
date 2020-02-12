@@ -5,6 +5,8 @@ spring:
     name: goods-web
   thymeleaf:
     cache: false
+  main:
+      allow-bean-definition-overriding: true
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
       password: adg123

@@ -2,6 +2,7 @@ package org.Mercury.item.controller;
 
 import org.Mercury.common.entity.PageResult;
 import org.Mercury.entity.Sku;
+import org.Mercury.entity.Spu;
 import org.Mercury.entity.SpuDetail;
 import org.Mercury.entity.bo.SpuBo;
 import org.Mercury.item.service.GoodsService;
@@ -95,4 +96,12 @@ public class GoodsController {
         return ResponseEntity.ok(skus);
     }
 
+    @GetMapping("spu/{id}")
+    public ResponseEntity<Spu> querySpuById(@PathVariable("id") Long id){
+        Spu spu = this.goodsService.querySpuById(id);
+        if(spu == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(spu);
+    }
 }

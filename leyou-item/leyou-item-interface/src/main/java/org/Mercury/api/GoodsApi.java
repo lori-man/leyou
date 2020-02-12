@@ -2,6 +2,7 @@ package org.Mercury.api;
 
 import org.Mercury.common.entity.PageResult;
 import org.Mercury.entity.Sku;
+import org.Mercury.entity.Spu;
 import org.Mercury.entity.SpuDetail;
 import org.Mercury.entity.bo.SpuBo;
 import org.springframework.stereotype.Controller;
@@ -50,4 +51,11 @@ public interface GoodsApi {
     @GetMapping("sku/list")
     public List<Sku> querySkusBySpuId(@RequestParam("id") Long spuId);
 
+    /**
+     * 根据spu的id查询spu
+     * @param id
+     * @return
+     */
+    @GetMapping("spu/{id}")
+    public Spu querySpuById(@PathVariable("id") Long id);
 }

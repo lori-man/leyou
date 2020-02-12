@@ -1,7 +1,10 @@
 package org.Mercury.api;
 
+import org.Mercury.entity.SpecGroup;
 import org.Mercury.entity.SpecParam;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,4 +25,13 @@ public interface SpecificationApi {
             @RequestParam(value = "generic",required = false) Boolean generic,
             @RequestParam(value = "searching",required = false) Boolean searching
             );
+
+    /**
+     * 根据分类id获取参数组的集合
+     * @param cid
+     * @return
+     */
+    @GetMapping("groups/param/{cid}")
+    public List<SpecGroup> queryGroupsWithParam(@PathVariable("cid") Long cid);
+
 }

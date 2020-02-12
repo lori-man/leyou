@@ -10,6 +10,7 @@ import org.Mercury.entity.*;
 import org.Mercury.repository.GoodsRepository;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -65,8 +66,9 @@ public class SearchService {
         queryBuilder = new NativeSearchQueryBuilder();
 
         // 1、对key进行全文检索查询
-        MatchQueryBuilder basicQuery = QueryBuilders.matchQuery("all", key).operator(Operator.AND);
-        queryBuilder.withQuery(basicQuery);
+//        MatchQueryBuilder basicQuery = QueryBuilders.matchQuery("all", key).operator(Operator.AND);
+        BoolQueryBuilder boolQueryBuilder = bulidBoolQueryBuilder(request);
+        queryBuilder.withQuery(boolQueryBuilder);
 
         // 2、通过sourceFilter设置返回的结果字段,我们只需要id、skus、subTitle
         queryBuilder.withSourceFilter(new FetchSourceFilter(
@@ -95,10 +97,37 @@ public class SearchService {
         List<Map<String, Object>> specs = null;
         if (!CollectionUtils.isEmpty(categories)) {
             //对规格参数进行聚合
-            specs= getParamAggResult((Long)categories.get(0).get("id"),basicQuery);
+            specs= getParamAggResult((Long)categories.get(0).get("id"),boolQueryBuilder);
         }
         // 封装结果并返回
         return new SearchResult(goodsPage.getTotalElements(), goodsPage.getTotalPages(), goodsPage.getContent(), categories, brands,specs);
+    }
+
+    /**
+     * 构建布尔查询
+     *
+     * @param request
+     * @return
+     */
+    private BoolQueryBuilder bulidBoolQueryBuilder(SearchRequest request) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        //给布尔查询添加查询条件
+        boolQueryBuilder.must(QueryBuilders.matchQuery("all", request.getKey()).operator(Operator.AND));
+        //添加过滤条件
+        //获取用户选择的过滤信息
+        Map<String, Object> filter = request.getFilter();
+        for (Map.Entry<String, Object> entry : filter.entrySet()) {
+            String key = entry.getKey();
+            if (StringUtils.equals("品牌", key)) {
+                key = "brandId";
+            } else if (StringUtils.equals("cid3", key)) {
+                key = "cid3";
+            }else {
+                key = "specs." + key + ".keyword";
+            }
+            boolQueryBuilder.filter(QueryBuilders.termQuery(key, entry.getValue()));
+        }
+        return boolQueryBuilder;
     }
 
     /**
@@ -107,7 +136,7 @@ public class SearchService {
      * @param basicQuery
      * @return
      */
-    private List<Map<String, Object>> getParamAggResult(Long cid, MatchQueryBuilder basicQuery) {
+    private List<Map<String, Object>> getParamAggResult(Long cid, BoolQueryBuilder basicQuery) {
         //创建自定义查询构造器
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         //基于基本的查询条件，聚合规格参数
