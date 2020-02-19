@@ -1,4 +1,4 @@
-package org.Mercury.common.entity;
+package org.Mercury.entity;
 
 import java.util.List;
 

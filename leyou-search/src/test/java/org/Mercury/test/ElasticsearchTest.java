@@ -1,7 +1,7 @@
 package org.Mercury.test;
 
 import org.Mercury.client.GoodsClient;
-import org.Mercury.common.entity.PageResult;
+import org.Mercury.entity.PageResult;
 import org.Mercury.entity.Goods;
 import org.Mercury.entity.bo.SpuBo;
 import org.Mercury.repository.GoodsRepository;

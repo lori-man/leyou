@@ -2,7 +2,7 @@ package org.Mercury.item.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.Mercury.common.entity.PageResult;
+import org.Mercury.entity.PageResult;
 import org.Mercury.entity.*;
 import org.Mercury.entity.bo.SpuBo;
 import org.Mercury.item.mapper.*;

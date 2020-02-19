@@ -8,6 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="gateway" />
         <module name="goods-web" />
+        <module name="leyou-auth-commom" />
+        <module name="leyou-auth-service" />
         <module name="leyou-common" />
         <module name="leyou-item-interface" />
         <module name="leyou-item-service" />
@@ -19,6 +21,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="leyou-auth-common" target="1.8" />
       <module name="rabbitmq-demo" target="1.8" />
     </bytecodeTargetLevel>
   </component>

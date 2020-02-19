@@ -1,8 +1,5 @@
 package org.Mercury.entity;
 
-import org.Mercury.common.entity.PageResult;
-
-import javax.jws.Oneway;
 import java.util.List;
 import java.util.Map;
 

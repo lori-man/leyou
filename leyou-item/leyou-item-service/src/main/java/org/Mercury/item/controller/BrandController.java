@@ -1,7 +1,6 @@
 package org.Mercury.item.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.Mercury.common.entity.PageResult;
+import org.Mercury.entity.PageResult;
 import org.Mercury.entity.Brand;
 import org.Mercury.item.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;

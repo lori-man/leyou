@@ -1,8 +1,5 @@
 package org.Mercury.controller;
 
-import com.netflix.discovery.converters.Auto;
-import org.Mercury.common.entity.PageResult;
-import org.Mercury.entity.Goods;
 import org.Mercury.entity.SearchRequest;
 import org.Mercury.entity.SearchResult;
 import org.Mercury.service.SearchService;
@@ -12,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SearchController {

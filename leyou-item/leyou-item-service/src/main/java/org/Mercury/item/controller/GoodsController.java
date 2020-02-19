@@ -1,6 +1,6 @@
 package org.Mercury.item.controller;
 
-import org.Mercury.common.entity.PageResult;
+import org.Mercury.entity.PageResult;
 import org.Mercury.entity.Sku;
 import org.Mercury.entity.Spu;
 import org.Mercury.entity.SpuDetail;

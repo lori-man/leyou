@@ -1,11 +1,10 @@
 package org.Mercury.api;
 
-import org.Mercury.common.entity.PageResult;
+import org.Mercury.entity.PageResult;
 import org.Mercury.entity.Sku;
 import org.Mercury.entity.Spu;
 import org.Mercury.entity.SpuDetail;
 import org.Mercury.entity.bo.SpuBo;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
