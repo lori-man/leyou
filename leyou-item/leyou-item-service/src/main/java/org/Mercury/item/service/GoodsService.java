@@ -7,6 +7,8 @@ import org.Mercury.entity.*;
 import org.Mercury.entity.bo.SpuBo;
 import org.Mercury.item.mapper.*;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,9 @@ public class GoodsService {
 
     @Autowired
     private StockMapper stockMapper;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     /**
      * 根据条件分页查询spu
@@ -108,9 +113,16 @@ public class GoodsService {
         this.spuDetailMapper.insertSelective(spuDetail);
 
         saveSkuAndStock(spuBo);
-
+        sendMess("insert", spuBo.getId());
     }
 
+    public void sendMess(String type,Long id) {
+        try {
+            this.amqpTemplate.convertAndSend("item."+type, id);
+        } catch (AmqpException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 根据spuId查询SpuDetail
      *
@@ -139,7 +151,7 @@ public class GoodsService {
     }
 
     /**
-     * 新增商品
+     * 更新商品
      *
      * @param spuBo
      * @return
@@ -171,6 +183,7 @@ public class GoodsService {
         this.spuMapper.updateByPrimaryKeySelective(spuBo);
 
         this.spuDetailMapper.updateByPrimaryKeySelective(spuBo.getSpuDetail());
+        sendMess("update",spuBo.getId());
 
     }
 

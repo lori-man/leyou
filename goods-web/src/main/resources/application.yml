@@ -12,6 +12,13 @@ spring:
       password: adg123
       username: root
       url: jdbc:mysql://localhost:3306/leyou?serverTimezone=UTC
+  rabbitmq:
+      virtual-host: /leyou
+      host: 120.76.202.237
+      username: admin
+      password: xufushen
+      template:
+        exchange: LEYOU.ITEM.EXCHANGE
 
 eureka:
   client:

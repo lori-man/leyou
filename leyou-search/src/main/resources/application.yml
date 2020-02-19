@@ -16,6 +16,11 @@ spring:
       url: jdbc:mysql://localhost:3306/leyou?serverTimezone=UTC
   jackson:
     default-property-inclusion: non_null
+  rabbitmq:
+        virtual-host: /leyou
+        host: 120.76.202.237
+        username: admin
+        password: xufushen
 eureka:
   client:
     service-url:
