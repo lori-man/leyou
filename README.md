@@ -33,3 +33,5 @@
     registy：注册机
     images：照片存储位置
     html：thymeleaf静态化存储位置
+    leyou-user: 用户微服务
+    leyou-auth: 授权中心微服务:配合用户微服务使用
