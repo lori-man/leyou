@@ -16,4 +16,19 @@ zuul:
     item-service: /item/**  #路由到商品的微服务
     search-service: /search/** #路由到搜索微服务
     user-service: /user/** #用户微服务
-    auth-servie: /auth/**
+    auth-service: /auth/** #授权微服务
+  add-host-header: true
+  sensitive-headers:   #覆盖默认敏感头信息
+
+leyou:
+  jwt:
+    pubKeyPath: C:\\Users\\xufus\\.ssh\\rsa.pub # 公钥地址
+    cookieName: LY_TOKEN
+  filter:
+    allowPaths:
+      - /api/auth
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code
+      - /api/item

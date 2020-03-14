@@ -1,12 +1,11 @@
 package org.Mercury.item.mapper;
 
-import org.Mercury.entity.Brand;
+import org.Mercury.item.entity.Brand;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.common.Mapper;
 
-import javax.persistence.Table;
 import java.util.List;
 
 public interface BrandMapper extends Mapper<Brand> {

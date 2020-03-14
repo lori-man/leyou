@@ -1,11 +1,11 @@
 package org.Mercury.test;
 
-import org.Mercury.client.GoodsClient;
-import org.Mercury.entity.PageResult;
-import org.Mercury.entity.Goods;
-import org.Mercury.entity.bo.SpuBo;
-import org.Mercury.repository.GoodsRepository;
-import org.Mercury.service.SearchService;
+import org.Mercury.common.entity.PageResult;
+import org.Mercury.item.entity.SpuBo;
+import org.Mercury.search.client.GoodsClient;
+import org.Mercury.search.entity.Goods;
+import org.Mercury.search.repository.GoodsRepository;
+import org.Mercury.search.service.SearchService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

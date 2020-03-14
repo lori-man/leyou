@@ -1,7 +1,7 @@
 package org.Mercury.item.controller;
 
-import org.Mercury.entity.PageResult;
-import org.Mercury.entity.Brand;
+import org.Mercury.common.entity.PageResult;
+import org.Mercury.item.entity.Brand;
 import org.Mercury.item.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

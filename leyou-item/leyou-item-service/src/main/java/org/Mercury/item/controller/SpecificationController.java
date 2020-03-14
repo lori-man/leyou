@@ -1,7 +1,7 @@
 package org.Mercury.item.controller;
 
-import org.Mercury.entity.SpecGroup;
-import org.Mercury.entity.SpecParam;
+import org.Mercury.item.entity.SpecGroup;
+import org.Mercury.item.entity.SpecParam;
 import org.Mercury.item.service.SpecificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

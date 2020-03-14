@@ -1,6 +1,6 @@
 package org.Mercury.item.mapper;
 
-import org.Mercury.entity.Category;
+import org.Mercury.item.entity.Category;
 import tk.mybatis.mapper.additional.idlist.SelectByIdListMapper;
 import tk.mybatis.mapper.common.Mapper;
 

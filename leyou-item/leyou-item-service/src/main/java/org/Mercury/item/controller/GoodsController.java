@@ -1,10 +1,10 @@
 package org.Mercury.item.controller;
 
-import org.Mercury.entity.PageResult;
-import org.Mercury.entity.Sku;
-import org.Mercury.entity.Spu;
-import org.Mercury.entity.SpuDetail;
-import org.Mercury.entity.bo.SpuBo;
+import org.Mercury.common.entity.PageResult;
+import org.Mercury.item.entity.Sku;
+import org.Mercury.item.entity.Spu;
+import org.Mercury.item.entity.SpuBo;
+import org.Mercury.item.entity.SpuDetail;
 import org.Mercury.item.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

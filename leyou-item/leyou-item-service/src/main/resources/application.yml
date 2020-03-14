@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: item-service
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: adg123

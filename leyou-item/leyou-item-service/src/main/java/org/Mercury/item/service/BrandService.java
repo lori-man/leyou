@@ -2,8 +2,8 @@ package org.Mercury.item.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.Mercury.entity.PageResult;
-import org.Mercury.entity.Brand;
+import org.Mercury.common.entity.PageResult;
+import org.Mercury.item.entity.Brand;
 import org.Mercury.item.mapper.BrandMapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

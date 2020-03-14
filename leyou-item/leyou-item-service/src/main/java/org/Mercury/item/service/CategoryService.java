@@ -1,6 +1,6 @@
 package org.Mercury.item.service;
 
-import org.Mercury.entity.Category;
+import org.Mercury.item.entity.Category;
 import org.Mercury.item.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

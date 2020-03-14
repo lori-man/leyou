@@ -7,7 +7,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("org.Mercury.mapper")
+@MapperScan("org.Mercury.user.mapper")
 public class LeyouUserApplication {
     public static void main(String[] args) {
         SpringApplication.run(LeyouUserApplication.class);

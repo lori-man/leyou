@@ -2,9 +2,8 @@ package org.Mercury.item.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.Mercury.entity.PageResult;
-import org.Mercury.entity.*;
-import org.Mercury.entity.bo.SpuBo;
+import org.Mercury.common.entity.PageResult;
+import org.Mercury.item.entity.*;
 import org.Mercury.item.mapper.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.AmqpException;

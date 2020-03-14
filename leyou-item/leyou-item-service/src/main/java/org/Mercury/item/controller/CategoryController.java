@@ -1,6 +1,6 @@
 package org.Mercury.item.controller;
 
-import org.Mercury.entity.Category;
+import org.Mercury.item.entity.Category;
 import org.Mercury.item.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collections;
 import java.util.List;
 
 @Controller
